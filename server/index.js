@@ -12,7 +12,7 @@ app.get("/", (_, res) => {
   res.send(200)
 });
 
-app.post("/product", async (req, res) => {
+app.post("/products", async (req, res) => {
   console.log(req.body);
   const product = await Product.create({
     name: req.body.name,
@@ -21,6 +21,15 @@ app.post("/product", async (req, res) => {
   })
   console.log(product.id);
   res.json(product)
+})
+
+app.delete('/products/:id', async (req, res) => {
+  const result = await Product.destroy({
+    where: {
+      id: req.params.id
+    }
+  })
+  res.json({ success: !!result })
 })
 
 app.get('/products', async (req, res) => {
